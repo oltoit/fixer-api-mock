@@ -1,0 +1,6 @@
+services:
+  spring-service:
+    build: .
+    container_name: mock-api
+    ports:
+      - "8910:8080"
