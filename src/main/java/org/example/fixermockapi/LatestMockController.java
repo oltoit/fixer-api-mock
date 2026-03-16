@@ -21,15 +21,23 @@ public class LatestMockController {
     @Value("classpath:standard-answer.json")
     private Resource standardAnswer;
 
-    @Value("classpath:error-answer.json")
-    private Resource errorAnswer;
+    @Value("classpath:missing-key.json")
+    private Resource missingKey;
+
+    @Value("classpath:invalid-key.json")
+    private Resource invalidKey;
 
     @GetMapping
     public ResponseEntity<?> getLatest(@RequestParam(name = "access_key", required = false) String apiKey) {
         System.out.println("Processing Request");
         try {
-            String body = this.apiKey.equals(apiKey) ? readFileContent(standardAnswer) : readFileContent(errorAnswer);
-            return ResponseEntity.ok(body);
+            if (apiKey == null || apiKey.isEmpty()) {
+                return ResponseEntity.status(401).body(readFileContent(missingKey));
+            } else if (apiKey.equals(this.apiKey)) {
+                return ResponseEntity.ok(readFileContent(standardAnswer));
+            } else {
+                return ResponseEntity.status(401).body(readFileContent(invalidKey));
+            }
         } catch(IOException e) {
             System.err.printf("Could not retrieve contents of one of the files: %s%n", e);
             return ResponseEntity.internalServerError().build();

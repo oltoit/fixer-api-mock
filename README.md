@@ -17,11 +17,16 @@ The Key can be set in the ```application.properties``` file as the value of ```m
 
 ### API-answer
 
-The API will always respond with a 200-OK code.
-The body will either contain an error (taken from the ```error-answer.json``` file) if the ```API-Key``` doesn't match.
+The API will always respond either respond with a 200 or 401 code.
+
+The body will contain an error (taken from the ```error-answer.json``` file) if the ```API-Key``` doesn't match.
+The HTTP-Statuscode will be 401 in this case.
 
 In case the keys do match the correct answer (taken from the ```standard-answer.json``` file) will be supplied in the body.
+the HTTP-Statuscode will be 200 in this case.
 It is the value returned by calling the latest-endpoint of the Fixer API without any arguments than the ```API-Key```
 on the 13th of March 2026 at 13:55 CET.
 
 There is a chance that the Mock returns an internal server error if one of the files could not be opened.
+
+If a endpoint other than ```/latest``` is called the API will respond with a 404.
