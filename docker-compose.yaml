@@ -4,3 +4,13 @@ services:
     container_name: mock-api
     ports:
       - "8910:8080"
+
+  db:
+    image: postgres:15
+    container_name: ecommerce-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
