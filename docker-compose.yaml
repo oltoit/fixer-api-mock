@@ -6,7 +6,7 @@ services:
       - "8910:8080"
 
   db:
-    image: postgres:15
+    image: postgres:18.3
     container_name: ecommerce-db
     ports:
       - "5432:5432"
